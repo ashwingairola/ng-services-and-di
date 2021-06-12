@@ -11,6 +11,7 @@ export class NewAccountComponent {
 	@Output() accountAdded = new EventEmitter<{ name: string; status: string }>();
 
 	constructor(@Inject(LOGGER) private loggingService: ILoggingService) {}
+	// constructor(private loggingService: LoggingService) {}
 
 	onCreateAccount(accountName: string, accountStatus: string) {
 		this.accountAdded.emit({

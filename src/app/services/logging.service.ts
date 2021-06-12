@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ILoggingService } from '../models';
 
-@Injectable({
-	providedIn: 'root'
-})
+@Injectable()
 export class LoggingService implements ILoggingService {
 	constructor() {}
 

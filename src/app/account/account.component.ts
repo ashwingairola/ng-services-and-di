@@ -1,4 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { ILoggingService } from '../models';
+import { LOGGER } from '../tokens/tokens';
 
 @Component({
 	selector: 'app-account',
@@ -13,8 +15,10 @@ export class AccountComponent {
 		newStatus: string;
 	}>();
 
+	constructor(@Inject(LOGGER) private loggingService: ILoggingService) {}
+
 	onSetTo(status: string) {
 		this.statusChanged.emit({ id: this.id, newStatus: status });
-		console.log('A server status changed, new status: ' + status);
+		this.loggingService.logStatusChange(status);
 	}
 }
