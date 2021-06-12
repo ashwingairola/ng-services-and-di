@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Inject, Output } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { ILoggingService } from '../models';
+import { AccountService } from '../services/account.service';
 import { LOGGER } from '../tokens/tokens';
 
 @Component({
@@ -8,16 +9,14 @@ import { LOGGER } from '../tokens/tokens';
 	styleUrls: ['./new-account.component.css']
 })
 export class NewAccountComponent {
-	@Output() accountAdded = new EventEmitter<{ name: string; status: string }>();
-
-	constructor(@Inject(LOGGER) private loggingService: ILoggingService) {}
+	constructor(
+		@Inject(LOGGER) private loggingService: ILoggingService,
+		private accountService: AccountService
+	) {}
 	// constructor(private loggingService: LoggingService) {}
 
 	onCreateAccount(accountName: string, accountStatus: string) {
-		this.accountAdded.emit({
-			name: accountName,
-			status: accountStatus
-		});
+		this.accountService.addAccount(accountName, accountStatus);
 		this.loggingService.logStatusChange(accountStatus);
 	}
 }

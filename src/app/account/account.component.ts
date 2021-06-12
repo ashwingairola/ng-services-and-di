@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
 import { ILoggingService } from '../models';
+import { AccountService } from '../services/account.service';
 import { LOGGER } from '../tokens/tokens';
 
 @Component({
@@ -10,15 +11,14 @@ import { LOGGER } from '../tokens/tokens';
 export class AccountComponent {
 	@Input() account!: { name: string; status: string };
 	@Input() id!: number;
-	@Output() statusChanged = new EventEmitter<{
-		id: number;
-		newStatus: string;
-	}>();
 
-	constructor(@Inject(LOGGER) private loggingService: ILoggingService) {}
+	constructor(
+		@Inject(LOGGER) private loggingService: ILoggingService,
+		private accountService: AccountService
+	) {}
 
 	onSetTo(status: string) {
-		this.statusChanged.emit({ id: this.id, newStatus: status });
+		this.accountService.updateStatus(this.id, status);
 		this.loggingService.logStatusChange(status);
 	}
 }
